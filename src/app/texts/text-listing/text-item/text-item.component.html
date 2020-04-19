@@ -1,1 +1,31 @@
-<p>text-item works!</p>
+<a href="">
+  <div class="card">
+    <div class="card-body">
+      <p>{{ textItem.description | stringTruncate }}</p>
+    </div>
+
+    <div class="card-footer d-flex justify-content-between">
+      <div class="">
+        <h6 class="m-0">User name</h6>
+        <p class="m-0"><small>Post Date</small></p>
+      </div>
+      <!--end left content-->
+
+      <div class="">
+        <div>
+          <span class="d-flex align-items-center"
+            ><img src="assets/images/like.png" alt="like" class="mr-1" />
+            166</span
+          >
+        </div>
+        <div>
+          <span class="d-flex align-items-center"
+            ><img src="assets/images/comment.png" alt="comment" class="mr-1" />
+            166</span
+          >
+        </div>
+      </div>
+      <!--end right content-->
+    </div>
+  </div>
+</a>

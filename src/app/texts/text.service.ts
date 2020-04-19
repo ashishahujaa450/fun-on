@@ -35,4 +35,12 @@ export class TextService {
   getTextByIndex(index: number): TextInterface {
     return this.textListing[index];
   }
+
+  fillList(list: TextInterface[]) {
+    this.textListing.splice(0, this.textListing.length);
+
+    list.forEach((text) => {
+      this.textListing.push(text);
+    });
+  }
 }

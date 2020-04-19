@@ -1,0 +1,42 @@
+img {
+  max-width: 15px;
+}
+
+.card {
+  transition: 0.2s all ease;
+  -webkit-transition: 0.2s all ease;
+  -moz-transition: 0.2s all ease;
+  -ms-transition: 0.2s all ease;
+  -o-transition: 0.2s all ease;
+  margin-bottom: 1rem;
+
+  &:hover {
+    border: 1px solid #007bff;
+    box-shadow: 0px 1px 10px -1px #00000042;
+  }
+}
+
+a {
+  color: black;
+  height: 100%;
+  display: flex;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  h5.card-title {
+    font-size: 16px;
+  }
+  .card-body {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .card {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

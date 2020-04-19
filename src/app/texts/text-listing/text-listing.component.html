@@ -1,1 +1,7 @@
-<p>text-listing works!</p>
+<div class="text-list-wrapper row row-eq-height">
+  <app-text-item
+    class="col-3"
+    *ngFor="let textItem of textListing; let i = index"
+    [textItem]="textItem"
+  ></app-text-item>
+</div>

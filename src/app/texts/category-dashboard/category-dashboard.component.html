@@ -2,3 +2,7 @@
   *ngFor="let category of categoryListing"
   [category]="category"
 ></app-category-card>
+
+<app-category-card
+  [category]="{ categoryName: 'All', imgName: 'correct.png' }"
+></app-category-card>
