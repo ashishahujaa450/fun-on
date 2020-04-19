@@ -1,0 +1,19 @@
+textarea,
+select,
+option {
+  &.ng-invalid.ng-touched {
+    border: 1px solid #dc3545;
+  }
+}
+
+.check-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  & > div {
+    flex-basis: 50%;
+    margin-bottom: 0.5rem;
+  }
+}

@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+  <a class="navbar-brand" routerLink="text-dashboard">
+    Fun on
+  </a>
+  <button
+    type="button"
+    class="navbar-toggler"
+    data-toggle="collapse"
+    data-target="#navbarCollapse"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="navbar-nav">
+      <a
+        class="nav-item nav-link"
+        routerLink="text-dashboard"
+        routerLinkActive="active"
+        >Texts</a
+      >
+      <a class="nav-item nav-link">Images</a>
+      <a
+        class="nav-item nav-link"
+        routerLink="text-upload"
+        routerLinkActive="active"
+        >Upload Text</a
+      >
+      <a class="nav-item nav-link">Upload Images</a>
+      <a class="nav-item nav-link">My Uploads</a>
+    </div>
+    <div class="navbar-nav ml-auto">
+      <li class="nav-item dropdown dropleft">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Manage Account
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Login</a>
+          <a class="dropdown-item" href="#">Sign up</a>
+        </div>
+      </li>
+    </div>
+  </div>
+</nav>
