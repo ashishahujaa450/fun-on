@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-import { TextInterface } from "./text.model";
+import { TextInterface, CommentInterface } from "./text.model";
 import { TextDataService } from "../shared/text-data.service";
 import { AuthService } from "../auth/auth.service";
 import { BehaviorSubject } from "rxjs";
@@ -30,12 +30,13 @@ export class TextService {
     //attach date with the post
     item.date = new Date();
 
+    //add blank comments for new post
+    item.comment = [{ body: "test", date: new Date(), user: null }];
+
     //attach user with the post
     this.authService.user.subscribe((user) => {
       item.user = user;
     });
-
-    console.log(item);
 
     //push item into text listing
     this.textListing.push(item);
@@ -55,6 +56,14 @@ export class TextService {
 
     list.forEach((text) => {
       this.textListing.push(text);
+    });
+  }
+
+  addComments(comments: CommentInterface, id: number) {
+    this.textListing.forEach((elm) => {
+      if (elm.id == id) {
+        elm.comment.push(comments);
+      }
     });
   }
 }

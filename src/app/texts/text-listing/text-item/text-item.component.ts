@@ -17,6 +17,7 @@ export class TextItemComponent implements OnInit {
 
   onSelectText() {
     this.textService.selectedPost.next(this.textItem);
+    console.log(this.textItem);
     this.router.navigate(["text-detail"]);
   }
 }

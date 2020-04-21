@@ -7,4 +7,11 @@ export interface TextInterface {
   id?: number;
   date?: Date;
   user?: User;
+  comment?: CommentInterface[];
+}
+
+export interface CommentInterface {
+  user?: User;
+  body: string;
+  date?: Date;
 }

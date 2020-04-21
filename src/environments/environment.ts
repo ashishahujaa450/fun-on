@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   webApiKey: "AIzaSyDMek0KzmFg7vb9aFCbPQES-r3ml01hjB4",
+  selectedPostDetail: "postDetail",
+  authData: "userData",
 };
 
 /*

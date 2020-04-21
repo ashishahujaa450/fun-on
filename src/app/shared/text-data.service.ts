@@ -19,11 +19,15 @@ export class TextDataService {
 
   fetchText() {
     return this.http.get<TextInterface[]>(`${this.textUrl}texts.json`).pipe(
-      map((response) => {
+      map((response: TextInterface[]) => {
         const arr = new Array();
         for (let key in response) {
           const item = response[key];
-          const updatedItem = { ...item, id: key };
+          const updatedItem = {
+            ...item,
+            id: key,
+            comment: [],
+          };
           arr.push(updatedItem);
         }
         return arr;

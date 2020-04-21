@@ -24,7 +24,11 @@ const routes: Routes = [
     component: TextListingComponent,
     resolve: [TextResolver],
   },
-  { path: "text-detail", component: TextDetailComponent },
+  {
+    path: "text-detail",
+    component: TextDetailComponent,
+    resolve: [TextResolver],
+  },
 ];
 
 @NgModule({

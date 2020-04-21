@@ -25,7 +25,7 @@ export class AuthService {
   logout() {
     this.router.navigate(["auth"]);
     this.user.next(null);
-    localStorage.removeItem("userData");
+    localStorage.removeItem(environment.authData);
 
     if (this.expireTimer) {
       clearTimeout(this.expireTimer);
@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   autoLogin() {
-    const loadeduser = JSON.parse(localStorage.getItem("userData"));
+    const loadeduser = JSON.parse(localStorage.getItem(environment.authData));
 
     if (loadeduser) {
       const verifiedUser = new User(
@@ -113,7 +113,7 @@ export class AuthService {
 
     this.user.next(loadeduser);
     this.autoLogout(+data.expiresIn * 1000);
-    localStorage.setItem("userData", JSON.stringify(loadeduser));
+    localStorage.setItem(environment.authData, JSON.stringify(loadeduser));
   }
 
   signUp(data: AuthInterface) {
