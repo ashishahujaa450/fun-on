@@ -1,0 +1,35 @@
+h2.heading-message,
+a {
+  color: #007bff;
+}
+
+a {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 420px) {
+  h2.heading-message {
+    font-size: 26px;
+  }
+}
+
+.with_divider {
+  position: relative;
+  z-index: 4;
+}
+
+@media only screen and (min-width: 767px) {
+  form {
+    box-shadow: 1px 0px 10px 1px rgba(0, 0, 0, 0.2);
+    padding: 1rem 2rem;
+    margin-top: 2rem;
+  }
+}
+
+button[disabled] {
+  cursor: not-allowed;
+}
+
+input.ng-invalid.ng-touched {
+  border: 1px solid #dc3545;
+}

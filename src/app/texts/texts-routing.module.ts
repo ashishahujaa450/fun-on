@@ -10,7 +10,6 @@ const routes: Routes = [
   {
     path: "text-dashboard",
     component: CategoryDashboardComponent,
-    resolve: [TextResolver],
   },
   { path: "", redirectTo: "/text-dashboard", pathMatch: "full" },
   { path: "text-upload", component: TextUploadComponent },

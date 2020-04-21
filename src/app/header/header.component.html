@@ -24,29 +24,29 @@
         class="nav-item nav-link"
         routerLink="text-upload"
         routerLinkActive="active"
+        *ngIf="isAuthenticated"
         >Upload Text</a
       >
-      <a class="nav-item nav-link">Upload Images</a>
-      <a class="nav-item nav-link">My Uploads</a>
+      <a
+        class="nav-item nav-link"
+        routerLink="image-upload"
+        routerLinkActive="active"
+        *ngIf="isAuthenticated"
+        >Upload Images</a
+      >
+      <a class="nav-item nav-link" *ngIf="isAuthenticated">My Uploads</a>
     </div>
     <div class="navbar-nav ml-auto">
-      <li class="nav-item dropdown dropleft">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Manage Account
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Login</a>
-          <a class="dropdown-item" href="#">Sign up</a>
-        </div>
-      </li>
+      <a *ngIf="isAuthenticated" class="nav-item nav-link" (click)="logout()"
+        >Logout</a
+      >
+      <a
+        routerLink="auth"
+        routerLinkActive="active"
+        *ngIf="!isAuthenticated"
+        class="nav-item nav-link"
+        >Login/Signup</a
+      >
     </div>
   </div>
 </nav>

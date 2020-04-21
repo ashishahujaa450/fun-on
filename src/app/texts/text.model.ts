@@ -3,4 +3,5 @@ export interface TextInterface {
   like: number;
   category: string[];
   id?: number;
+  date?: Date;
 }

@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-12 col-lg-6 mx-auto">
+    <div class="text-center" *ngIf="isLoading">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+
+    <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
+      <h2 class="mb-4 heading-message" *ngIf="isLoginEnable">
+        Let's Login & share smiles!
+      </h2>
+
+      <h2 class="mb-4 heading-message" *ngIf="!isLoginEnable">
+        New User? <br />
+        Let's get things started!
+      </h2>
+
+      <div *ngIf="errorMessage && !isLoading">
+        <app-error-alert [message]="errorMessage"></app-error-alert>
+      </div>
+
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input
+          type="text"
+          id="fullName"
+          class="form-control"
+          name="userName"
+          ngModel
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="userEmail"
+          required
+          email
+          ngModel
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="pwd">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="pwd"
+          name="userPwd"
+          ngModel
+          required
+          minlength="5"
+        />
+      </div>
+
+      <div class="form-grup mt-4">
+        <button
+          class="btn btn-primary btn-block py-2"
+          type="submit"
+          [disabled]="authForm.invalid"
+        >
+          {{ isLoginEnable ? "Sign In" : "Sign Up" }}
+        </button>
+
+        <p class="text-center mt-3"><i>or</i></p>
+        <p class="text-center" (click)="switchLogin()">
+          {{ isLoginEnable ? "New User?" : "Already a member?" }}
+          <a
+            ><u>{{ isLoginEnable ? "Sign up" : "Sign In" }}</u></a
+          >
+        </p>
+      </div>
+    </form>
+  </div>
+</div>

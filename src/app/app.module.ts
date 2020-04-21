@@ -7,10 +7,19 @@ import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./header/header.component";
 
 import { TextsModule } from "./texts/texts.module";
+import { ImagesModule } from "./images/images.module";
+import { AuthModule } from "./auth/auth.module";
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
-  imports: [BrowserModule, AppRoutingModule, TextsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    TextsModule,
+    HttpClientModule,
+    ImagesModule,
+    AuthModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

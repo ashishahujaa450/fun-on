@@ -39,4 +39,22 @@ a {
     padding-left: 0;
     padding-right: 0;
   }
+
+  div.d-flex {
+    flex-direction: column;
+  }
+
+  .mobile_row {
+    flex-direction: row;
+    display: flex;
+
+    & > div + div {
+      margin-left: 0.5rem;
+    }
+  }
+
+  .card-footer {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 }

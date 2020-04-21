@@ -1,6 +1,10 @@
+<div class="text-center" *ngIf="isLoading">
+  <app-loading-spinner></app-loading-spinner>
+</div>
+
 <div class="text-list-wrapper row row-eq-height">
   <app-text-item
-    class="col-3"
+    class="col-6 col-lg-3 mobile_space_customizer"
     *ngFor="let textItem of textListing; let i = index"
     [textItem]="textItem"
   ></app-text-item>

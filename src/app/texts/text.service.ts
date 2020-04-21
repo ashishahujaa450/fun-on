@@ -23,6 +23,8 @@ export class TextService {
     //     ? this.textListing[this.textListing.length - 1].id + 1
     //     : 1;
 
+    //attach date with the post
+    item.date = new Date();
     //push item into text listing
     this.textListing.push(item);
   }
