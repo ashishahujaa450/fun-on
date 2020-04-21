@@ -8,10 +8,7 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ["./image-upload.component.scss"],
 })
 export class ImageUploadComponent implements OnInit {
-  public imageUpload: FormGroup;
-  public selectedfile = null;
-
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   ngOnInit(): void {}
 }
