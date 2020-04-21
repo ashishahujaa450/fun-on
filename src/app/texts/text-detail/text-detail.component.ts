@@ -61,7 +61,6 @@ export class TextDetailComponent implements OnInit, OnDestroy {
 
     //add comment to post
     this.textService.addComments(comment, this.selectedPost.id);
-    console.log(this.selectedPost.comment);
 
     form.reset();
   }

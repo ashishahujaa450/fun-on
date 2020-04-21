@@ -62,7 +62,6 @@ export class TextListingComponent implements OnInit {
 
       return filterdArr;
     } else {
-      console.log("no selected");
       return fullList;
     }
   }
