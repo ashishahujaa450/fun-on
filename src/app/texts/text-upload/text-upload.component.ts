@@ -82,7 +82,6 @@ export class TextUploadComponent implements OnInit {
 
       //save post to the database
       this.textDataService.uploadText(textUploaded).subscribe((response) => {
-        console.log(response);
         this.isLoading = false;
         this.message = "Your post successfully posted. let's Enjoy!";
         this.isPosted = true;

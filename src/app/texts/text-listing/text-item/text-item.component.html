@@ -1,4 +1,4 @@
-<a href="" id="{{ textItem.id }}">
+<a id="{{ textItem.id }}" (click)="onSelectText()">
   <div class="card">
     <div class="card-body">
       <p>{{ textItem.description | stringTruncate }}</p>
@@ -6,8 +6,10 @@
 
     <div class="card-footer d-flex justify-content-between">
       <div class="">
-        <h6 class="m-0">User name</h6>
-        <p class="m-0"><small>Post Date</small></p>
+        <h6 class="m-0">{{ textItem.user.name }}</h6>
+        <p class="m-0">
+          <small>{{ textItem.date | date: "mediumDate" }}</small>
+        </p>
       </div>
       <!--end left content-->
 
@@ -15,7 +17,7 @@
         <div>
           <span class="d-flex align-items-center"
             ><img src="assets/images/like.png" alt="like" class="mr-1" />
-            166</span
+            {{ textItem.like }}</span
           >
         </div>
         <div>

@@ -6,6 +6,7 @@ import { TextUploadComponent } from "./text-upload/text-upload.component";
 import { TextListingComponent } from "./text-listing/text-listing.component";
 import { TextResolver } from "./text-resolver.service";
 import { AuthGuardGuard } from "../auth/auth-guard.guard";
+import { TextDetailComponent } from "./text-detail/text-detail.component";
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
     component: TextListingComponent,
     resolve: [TextResolver],
   },
+  { path: "text-detail", component: TextDetailComponent },
 ];
 
 @NgModule({

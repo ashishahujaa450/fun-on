@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 
 import { TextInterface } from "./text.model";
 import { TextDataService } from "../shared/text-data.service";
+import { AuthService } from "../auth/auth.service";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -9,7 +11,9 @@ import { TextDataService } from "../shared/text-data.service";
 export class TextService {
   private textListing: TextInterface[] = [];
 
-  constructor() {}
+  public selectedPost = new BehaviorSubject<TextInterface>(null);
+
+  constructor(private authService: AuthService) {}
 
   get getTextListing() {
     return this.textListing;
@@ -25,6 +29,14 @@ export class TextService {
 
     //attach date with the post
     item.date = new Date();
+
+    //attach user with the post
+    this.authService.user.subscribe((user) => {
+      item.user = user;
+    });
+
+    console.log(item);
+
     //push item into text listing
     this.textListing.push(item);
   }
