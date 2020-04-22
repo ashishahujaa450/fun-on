@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { UserInterface } from "../auth/user.model";
 import { HttpClientModule, HttpClient, HttpParams } from "@angular/common/http";
 import { map } from "rxjs/operators";
+import { TextInterface } from "../texts/text.model";
 
 @Injectable({
   providedIn: "root",
@@ -30,6 +31,13 @@ export class UserStorageService {
         }
         return newUsersModifiedList;
       })
+    );
+  }
+
+  storeLike(treeKey: string, updatedUser: UserInterface) {
+    return this.http.put(
+      `${this.UserStoreUrl}users/${treeKey}.json`,
+      updatedUser
     );
   }
 }

@@ -65,6 +65,7 @@ export class TextDetailComponent implements OnInit, OnDestroy {
   }
 
   switchLike() {
+    //check if user is authorized to like or not
     if (!this.authUser) {
       this.likeErrorMessage = "Only Login users can like or comment on posts.";
       return;

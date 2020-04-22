@@ -7,6 +7,7 @@ import { TextListingComponent } from "./text-listing/text-listing.component";
 import { TextResolver } from "./text-resolver.service";
 import { AuthGuardGuard } from "../auth/auth-guard.guard";
 import { TextDetailComponent } from "./text-detail/text-detail.component";
+import { UserResolver } from "./user-resolver.service";
 
 const routes: Routes = [
   {
@@ -22,12 +23,12 @@ const routes: Routes = [
   {
     path: "text-listing",
     component: TextListingComponent,
-    resolve: [TextResolver],
+    resolve: [TextResolver, UserResolver],
   },
   {
     path: "text-detail",
     component: TextDetailComponent,
-    resolve: [TextResolver],
+    resolve: [TextResolver, UserResolver],
   },
 ];
 
