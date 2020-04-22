@@ -11,28 +11,36 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarCollapse">
+  <div class="collapse navbar-collapse" id="navbarCollapse" #mobileNav>
     <div class="navbar-nav">
       <a
         class="nav-item nav-link"
         routerLink="text-dashboard"
         routerLinkActive="active"
+        (click)="onNavClose()"
         >Texts</a
       >
-      <a class="nav-item nav-link">Images</a>
+      <a class="nav-item nav-link" (click)="onNavClose()">Images</a>
       <a
         class="nav-item nav-link"
         routerLink="text-upload"
         routerLinkActive="active"
+        (click)="onNavClose()"
         >Upload Text</a
       >
       <a
         class="nav-item nav-link"
         routerLink="image-upload"
         routerLinkActive="active"
+        (click)="onNavClose()"
         >Upload Images</a
       >
-      <a class="nav-item nav-link" *ngIf="isAuthenticated">My Uploads</a>
+      <a
+        class="nav-item nav-link"
+        *ngIf="isAuthenticated"
+        (click)="onNavClose()"
+        >My Uploads</a
+      >
     </div>
     <div class="navbar-nav ml-auto">
       <a *ngIf="isAuthenticated" class="nav-item nav-link" (click)="logout()"
@@ -43,6 +51,7 @@
         routerLinkActive="active"
         *ngIf="!isAuthenticated"
         class="nav-item nav-link"
+        (click)="onNavClose()"
         >Login/Signup</a
       >
     </div>

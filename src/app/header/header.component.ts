@@ -1,4 +1,11 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+} from "@angular/core";
 import { AuthService } from "../auth/auth.service";
 import { Subscription } from "rxjs";
 import { take } from "rxjs/operators";
@@ -11,6 +18,7 @@ import { take } from "rxjs/operators";
 export class HeaderComponent implements OnInit, OnDestroy {
   public isAuthenticated: boolean = false;
   public authUserSub: Subscription;
+  @ViewChild("mobileNav") mnav: ElementRef;
 
   constructor(private authService: AuthService) {}
 
@@ -27,11 +35,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logout() {
     this.isAuthenticated = false;
     this.authService.logout();
+    this.onNavClose();
   }
 
   ngOnDestroy() {
     if (this.authUserSub) {
       this.authUserSub.unsubscribe();
     }
+  }
+
+  onNavClose() {
+    (<HTMLElement>this.mnav.nativeElement).classList.remove("show");
   }
 }
