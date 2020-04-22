@@ -1,6 +1,17 @@
 <div class="row mt-3">
   <div class="col-12 col-lg-7 mx-auto">
-    <div class="card">
+    <div *ngIf="isLoading" class="text-center">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+
+    <div *ngIf="likeErrorMessage">
+      <app-error-popup
+        [message]="likeErrorMessage"
+        (close)="onClose()"
+      ></app-error-popup>
+    </div>
+
+    <div class="card" *ngIf="!isLoading">
       <div class="card-header text-right justify-content-end">
         <span
           class="badge badge-primary mr-2"
@@ -8,19 +19,11 @@
           >{{ tag }}</span
         >
       </div>
-      <div class="card-body">
+      <div class="card-body pb-1">
         {{ selectedPost.description }}
 
         <hr />
         <div class="d-flex justify-content-between">
-          <div class="left-content">
-            <h6 class="mb-0">{{ selectedPost.user.name }}</h6>
-            <p>
-              <small>{{ selectedPost.date | date: "medium" }}</small>
-            </p>
-          </div>
-          <!--end left content-->
-
           <div class="right-content">
             <button
               type="button"
@@ -38,7 +41,21 @@
                 >{{ selectedPost.like }}</span
               >
             </button>
+            <div>
+              <span class="text-muted">
+                <small>Comment {{ selectedPost.comment.length }}</small>
+              </span>
+            </div>
           </div>
+
+          <div class="left-content">
+            <h6 class="mb-0">{{ selectedPost.user.name }}</h6>
+            <p>
+              <small>{{ selectedPost.date | date: "medium" }}</small>
+            </p>
+          </div>
+          <!--end left content-->
+
           <!--end right content-->
         </div>
       </div>
@@ -67,7 +84,7 @@
         </div>
         <!--end comment thread-->
         <hr />
-        <div class="comment-form mt-4">
+        <div class="comment-form mt-4" *ngIf="authUser">
           <form #commentForm="ngForm" (ngSubmit)="onComment(commentForm)">
             <div class="form-group">
               <textarea

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map, tap } from "rxjs/operators";
 
-import { TextInterface } from "../texts/text.model";
+import { TextInterface, CommentInterface } from "../texts/text.model";
 import { TextService } from "../texts/text.service";
 
 @Injectable({
@@ -23,11 +23,16 @@ export class TextDataService {
         const arr = new Array();
         for (let key in response) {
           const item = response[key];
+
           const updatedItem = {
             ...item,
             id: key,
-            comment: [],
           };
+          if (item.comment && item.comment.length > 0) {
+            updatedItem.comment = item.comment;
+          } else {
+            updatedItem.comment = [];
+          }
           arr.push(updatedItem);
         }
         return arr;
@@ -36,5 +41,9 @@ export class TextDataService {
         this.textService.fillList(textListing);
       })
     );
+  }
+
+  updatePost(newText: TextInterface, id: string) {
+    return this.http.put(`${this.textUrl}texts/${id}.json`, newText);
   }
 }

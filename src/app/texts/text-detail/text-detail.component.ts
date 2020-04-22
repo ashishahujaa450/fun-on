@@ -6,6 +6,8 @@ import { Subscription } from "rxjs";
 import { environment } from "src/environments/environment";
 import { NgForm } from "@angular/forms";
 import { AuthService } from "src/app/auth/auth.service";
+import { TextDataService } from "src/app/shared/text-data.service";
+import { User } from "src/app/auth/user.model";
 
 @Component({
   selector: "app-text-detail",
@@ -15,10 +17,20 @@ import { AuthService } from "src/app/auth/auth.service";
 export class TextDetailComponent implements OnInit, OnDestroy {
   public postSubscription: Subscription;
   public selectedPost: TextInterface;
+  public isLoading: boolean = false;
+  public commentSubscription: Subscription;
+  public authUser: User = null;
+  public userSubscription: Subscription;
 
   public isLiked: boolean = false;
 
-  constructor(private textService: TextService) {}
+  public likeErrorMessage: string = null;
+
+  constructor(
+    private textService: TextService,
+    private textDataService: TextDataService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.postSubscription = this.textService.selectedPost.subscribe(
@@ -26,6 +38,14 @@ export class TextDetailComponent implements OnInit, OnDestroy {
         this.selectedPost = textPost;
       }
     );
+
+    this.userSubscription = this.authService.user.subscribe((user) => {
+      if (user) {
+        this.authUser = user;
+      } else {
+        this.authUser = null;
+      }
+    });
 
     this.statePersistence();
   }
@@ -45,8 +65,21 @@ export class TextDetailComponent implements OnInit, OnDestroy {
   }
 
   switchLike() {
+    if (!this.authUser) {
+      this.likeErrorMessage = "Only Login users can like or comment on posts.";
+      return;
+    } else {
+      this.likeErrorMessage = null;
+    }
+
     this.isLiked = !this.isLiked;
   }
+
+  onClose() {
+    this.likeErrorMessage = null;
+  }
+
+  private test() {}
 
   onComment(form: NgForm) {
     const value = form.form.value;
@@ -62,6 +95,21 @@ export class TextDetailComponent implements OnInit, OnDestroy {
     //add comment to post
     this.textService.addComments(comment, this.selectedPost.id);
 
+    this.isLoading = true;
+    //update post in database
+    this.commentSubscription = this.textDataService
+      .updatePost(this.selectedPost, String(this.selectedPost.id))
+      .subscribe(
+        (response) => {
+          this.isLoading = false;
+        },
+        (error) => {
+          alert("some error occured, please try again later");
+          this.isLoading = false;
+        }
+      );
+
+    //reset form
     form.reset();
   }
 
@@ -72,6 +120,10 @@ export class TextDetailComponent implements OnInit, OnDestroy {
 
     if (localStorage.getItem(environment.selectedPostDetail)) {
       localStorage.removeItem(environment.selectedPostDetail);
+    }
+
+    if (this.commentSubscription) {
+      this.commentSubscription.unsubscribe();
     }
   }
 }

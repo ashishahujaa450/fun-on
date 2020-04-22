@@ -1,16 +1,17 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { AuthInterface, AuthResponse } from "./auth.model";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { catchError, tap } from "rxjs/operators";
-import { throwError, BehaviorSubject } from "rxjs";
-import { User } from "./user.model";
+import { throwError, BehaviorSubject, Subscribable, Subscription } from "rxjs";
+import { User, UserInterface } from "./user.model";
 import { Router } from "@angular/router";
+import { UserStorageService } from "../shared/user-storage.service";
 
 @Injectable({
   providedIn: "root",
 })
-export class AuthService {
+export class AuthService implements OnDestroy {
   private signUpUrl: string =
     "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
   private loginUrl: string =
@@ -19,8 +20,13 @@ export class AuthService {
   public user = new BehaviorSubject<User>(null);
 
   public expireTimer: any;
+  public userStoreSubscription: Subscription;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private userStorage: UserStorageService
+  ) {}
 
   logout() {
     this.router.navigate(["auth"]);
@@ -112,6 +118,20 @@ export class AuthService {
     );
 
     this.user.next(loadeduser);
+
+    //create user and storeuser
+    const singleUser: UserInterface = {
+      name: authData.userName,
+      email: data.email,
+      password: authData.password,
+      localId: data.localId,
+      likedPost: [],
+    };
+
+    this.userStoreSubscription = this.userStorage
+      .storeUser(singleUser, loadeduser)
+      .subscribe((response) => {});
+
     this.autoLogout(+data.expiresIn * 1000);
     localStorage.setItem(environment.authData, JSON.stringify(loadeduser));
   }
@@ -140,5 +160,11 @@ export class AuthService {
           return throwError(this.handleError(response.error.error.message));
         })
       );
+  }
+
+  ngOnDestroy() {
+    if (this.userStoreSubscription) {
+      this.userStoreSubscription.unsubscribe();
+    }
   }
 }

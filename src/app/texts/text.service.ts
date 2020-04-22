@@ -30,9 +30,6 @@ export class TextService {
     //attach date with the post
     item.date = new Date();
 
-    //add blank comments for new post
-    item.comment = [{ body: "test", date: new Date(), user: null }];
-
     //attach user with the post
     this.authService.user.subscribe((user) => {
       item.user = user;

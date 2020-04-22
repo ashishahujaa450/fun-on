@@ -1,0 +1,26 @@
+<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header align-items-center justify-content-center">
+        <h5 class="modal-title text-center">We are really sorry!</h5>
+      </div>
+      <div class="modal-body">
+        <img
+          src="assets/images/criss-cross.png"
+          alt="check-icon"
+          class="img-fluid"
+        />
+        <p class="text-center">{{ message }}</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-warning" (click)="onClose()">
+          Close
+        </button>
+
+        <button type="button" class="btn btn-primary" (click)="login()">
+          Let's Login
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
