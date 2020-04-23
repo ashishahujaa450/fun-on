@@ -91,7 +91,7 @@ export class TextDetailComponent implements OnInit, OnDestroy {
 
     //set date & user with comment
     comment.date = new Date();
-    comment.user = this.selectedPost.user;
+    comment.user = this.authUser;
 
     //add comment to post
     this.textService.addComments(comment, this.selectedPost.id);

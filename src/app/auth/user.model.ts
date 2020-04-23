@@ -3,7 +3,6 @@ import { TextInterface } from "../texts/text.model";
 export interface UserInterface {
   name?: string;
   email?: string;
-  likedPost?: TextInterface[];
   password?: string;
   localId?: string;
 }

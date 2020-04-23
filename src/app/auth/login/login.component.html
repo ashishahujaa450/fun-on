@@ -18,7 +18,7 @@
         <app-error-alert [message]="errorMessage"></app-error-alert>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" *ngIf="!isLoginEnable">
         <label for="fullName">Full Name</label>
         <input
           type="text"

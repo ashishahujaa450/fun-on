@@ -2,8 +2,8 @@ import { Injectable, OnDestroy } from "@angular/core";
 import { AuthInterface, AuthResponse } from "./auth.model";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
-import { catchError, tap } from "rxjs/operators";
-import { throwError, BehaviorSubject, Subscribable, Subscription } from "rxjs";
+import { catchError, tap, map } from "rxjs/operators";
+import { throwError, BehaviorSubject } from "rxjs";
 import { User, UserInterface } from "./user.model";
 import { Router } from "@angular/router";
 import { UserStorageService } from "../shared/user-storage.service";
@@ -18,9 +18,7 @@ export class AuthService implements OnDestroy {
     "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
 
   public user = new BehaviorSubject<User>(null);
-
   public expireTimer: any;
-  public userStoreSubscription: Subscription;
 
   constructor(
     private http: HttpClient,
@@ -106,7 +104,11 @@ export class AuthService implements OnDestroy {
     return message;
   }
 
-  private handleAuth(data: AuthResponse, authData: AuthInterface) {
+  private handleAuth(
+    data: AuthResponse,
+    authData: AuthInterface,
+    fromWhere: string
+  ) {
     const expireTime = new Date(new Date().getTime() + +data.expiresIn * 1000);
 
     const loadeduser = new User(
@@ -119,29 +121,44 @@ export class AuthService implements OnDestroy {
 
     this.user.next(loadeduser);
 
-    //create user and storeuser
-    const singleUser: UserInterface = {
-      name: authData.userName,
-      email: data.email,
-      password: authData.password,
-      localId: data.localId,
-      likedPost: [],
-    };
-
-    this.userStoreSubscription = this.userStorage
-      .storeUser(singleUser, loadeduser)
-      .subscribe((response) => {});
-
     this.autoLogout(+data.expiresIn * 1000);
+
+    if (fromWhere === "fromSignUp") {
+      //store user on sign up
+
+      const singleUser: UserInterface = {
+        email: data.email,
+        localId: data.localId,
+        password: authData.password,
+        name: authData.userName,
+      };
+
+      this.userStorage
+        .storeUser(singleUser, loadeduser)
+        .subscribe((response) => {});
+    } else {
+      //fetch user on login
+
+      this.userStorage.fetchUser(data.email).subscribe((response) => {
+        response.forEach((elm) => {
+          if (elm.email === data.email) {
+            loadeduser.name = elm.name;
+          }
+        });
+      });
+    }
+
     localStorage.setItem(environment.authData, JSON.stringify(loadeduser));
   }
+
+  private setUserName() {}
 
   signUp(data: AuthInterface) {
     return this.http
       .post<AuthResponse>(`${this.signUpUrl}${environment.webApiKey}`, data)
       .pipe(
         tap((response) => {
-          this.handleAuth(response, data);
+          this.handleAuth(response, data, "fromSignUp");
         }),
         catchError((response) => {
           return throwError(this.handleError(response.error.error.message));
@@ -154,7 +171,7 @@ export class AuthService implements OnDestroy {
       .post<AuthResponse>(`${this.loginUrl}${environment.webApiKey}`, data)
       .pipe(
         tap((response) => {
-          this.handleAuth(response, data);
+          this.handleAuth(response, data, "fromLogin");
         }),
         catchError((response) => {
           return throwError(this.handleError(response.error.error.message));
@@ -162,9 +179,5 @@ export class AuthService implements OnDestroy {
       );
   }
 
-  ngOnDestroy() {
-    if (this.userStoreSubscription) {
-      this.userStoreSubscription.unsubscribe();
-    }
-  }
+  ngOnDestroy() {}
 }

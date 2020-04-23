@@ -19,16 +19,17 @@ const routes: Routes = [
     path: "text-upload",
     component: TextUploadComponent,
     canActivate: [AuthGuardGuard],
+    resolve: [UserResolver],
   },
   {
     path: "text-listing",
     component: TextListingComponent,
-    resolve: [TextResolver, UserResolver],
+    resolve: [TextResolver],
   },
   {
     path: "text-detail",
     component: TextDetailComponent,
-    resolve: [TextResolver, UserResolver],
+    resolve: [TextResolver],
   },
 ];
 

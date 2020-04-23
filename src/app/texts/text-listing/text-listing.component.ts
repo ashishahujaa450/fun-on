@@ -4,7 +4,6 @@ import { TextService } from "../text.service";
 import { TextDataService } from "src/app/shared/text-data.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { map } from "rxjs/operators";
-import { UserStorageService } from "src/app/shared/user-storage.service";
 import { Subscription } from "rxjs";
 
 @Component({
@@ -22,8 +21,7 @@ export class TextListingComponent implements OnInit, OnDestroy {
     private textService: TextService,
     private textDataService: TextDataService,
     private router: Router,
-    private route: ActivatedRoute,
-    private userStorage: UserStorageService
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
