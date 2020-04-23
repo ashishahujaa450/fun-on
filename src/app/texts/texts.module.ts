@@ -10,6 +10,7 @@ import { TextItemComponent } from "./text-listing/text-item/text-item.component"
 import { TextUploadComponent } from "./text-upload/text-upload.component";
 import { SharedModule } from "../shared/shared.module";
 import { TextDetailComponent } from "./text-detail/text-detail.component";
+import { MyUploadsComponent } from './my-uploads/my-uploads.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { TextDetailComponent } from "./text-detail/text-detail.component";
     TextItemComponent,
     TextUploadComponent,
     TextDetailComponent,
+    MyUploadsComponent,
   ],
   imports: [
     CommonModule,

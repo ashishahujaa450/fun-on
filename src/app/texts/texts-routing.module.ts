@@ -8,6 +8,7 @@ import { TextResolver } from "./text-resolver.service";
 import { AuthGuardGuard } from "../auth/auth-guard.guard";
 import { TextDetailComponent } from "./text-detail/text-detail.component";
 import { UserResolver } from "./user-resolver.service";
+import { MyUploadsComponent } from "./my-uploads/my-uploads.component";
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
     path: "text-detail",
     component: TextDetailComponent,
     resolve: [TextResolver],
+  },
+  {
+    path: "my-uploads",
+    component: MyUploadsComponent,
   },
 ];
 
