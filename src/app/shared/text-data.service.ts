@@ -28,11 +28,21 @@ export class TextDataService {
             ...item,
             id: key,
           };
+
+          //add comment arr
           if (item.comment && item.comment.length > 0) {
             updatedItem.comment = item.comment;
           } else {
             updatedItem.comment = [];
           }
+
+          //add like arr
+          if (item.likeUsersList && item.likeUsersList.length > 0) {
+            updatedItem.likeUsersList = item.likeUsersList;
+          } else {
+            updatedItem.likeUsersList = [];
+          }
+
           arr.push(updatedItem);
         }
         return arr;

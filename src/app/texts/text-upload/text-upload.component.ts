@@ -72,6 +72,7 @@ export class TextUploadComponent implements OnInit {
       description: value.textDescription,
       like: 0,
       category: value.categoryArr,
+      likeUsersList: [],
     };
 
     this.isLoading = true;

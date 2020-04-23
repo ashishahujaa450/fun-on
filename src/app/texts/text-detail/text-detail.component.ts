@@ -21,10 +21,21 @@ export class TextDetailComponent implements OnInit, OnDestroy {
   public commentSubscription: Subscription;
   public authUser: User = null;
   public userSubscription: Subscription;
+  public alreadyLiked: boolean = false;
 
   public isLiked: boolean = false;
 
   public likeErrorMessage: string = null;
+
+  public likeClasses = {
+    "btn-primary": this.isLiked || this.alreadyLiked,
+    "btn-outline-primary": !this.isLiked && !this.alreadyLiked,
+  };
+
+  public badgeClasses = {
+    "badge-light": this.isLiked || this.alreadyLiked,
+    "badge-edit": !this.isLiked && !this.alreadyLiked,
+  };
 
   constructor(
     private textService: TextService,
@@ -48,6 +59,11 @@ export class TextDetailComponent implements OnInit, OnDestroy {
     });
 
     this.statePersistence();
+
+    //check already liked post
+    if (this.authUser) {
+      this.checkAlreadyLike();
+    }
   }
 
   //state persistence when app re-loads on the same page
@@ -73,14 +89,38 @@ export class TextDetailComponent implements OnInit, OnDestroy {
       this.likeErrorMessage = null;
     }
 
+    //like post
+    this.likePost();
+
+    //switch mode
     this.isLiked = !this.isLiked;
+  }
+
+  private checkAlreadyLike() {
+    for (let i = 0; i < this.selectedPost.likeUsersList.length; i++) {
+      if (this.authUser.email === this.selectedPost.likeUsersList[i].email) {
+        this.alreadyLiked = true;
+        break;
+      } else {
+        this.alreadyLiked = false;
+      }
+    }
+  }
+
+  likePost() {
+    //check if already liked
+    this.checkAlreadyLike();
+    if (!this.alreadyLiked) {
+      //like post and store it into database
+      this.selectedPost.likeUsersList.push(this.authUser);
+      this.updatePostInDatabase();
+      this.alreadyLiked = false;
+    }
   }
 
   onClose() {
     this.likeErrorMessage = null;
   }
-
-  private test() {}
 
   onComment(form: NgForm) {
     const value = form.form.value;
@@ -95,7 +135,14 @@ export class TextDetailComponent implements OnInit, OnDestroy {
 
     //add comment to post
     this.textService.addComments(comment, this.selectedPost.id);
+    //update post
+    this.updatePostInDatabase();
 
+    //reset form
+    form.reset();
+  }
+
+  private updatePostInDatabase() {
     this.isLoading = true;
     //update post in database
     this.commentSubscription = this.textDataService
@@ -109,9 +156,6 @@ export class TextDetailComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         }
       );
-
-    //reset form
-    form.reset();
   }
 
   ngOnDestroy() {
@@ -125,6 +169,10 @@ export class TextDetailComponent implements OnInit, OnDestroy {
 
     if (this.commentSubscription) {
       this.commentSubscription.unsubscribe();
+    }
+
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
     }
   }
 }

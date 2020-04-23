@@ -8,6 +8,7 @@ export interface TextInterface {
   date?: Date;
   user?: User;
   comment?: CommentInterface[];
+  likeUsersList?: User[];
 }
 
 export interface CommentInterface {

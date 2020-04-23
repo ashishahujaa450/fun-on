@@ -8,7 +8,6 @@ import { HeaderComponent } from "./header/header.component";
 
 import { TextsModule } from "./texts/texts.module";
 import { ImagesModule } from "./images/images.module";
-import { AuthModule } from "./auth/auth.module";
 import { AuthInterceptor } from "./auth/auth-interceptor.service";
 
 @NgModule({
@@ -19,7 +18,6 @@ import { AuthInterceptor } from "./auth/auth-interceptor.service";
     TextsModule,
     HttpClientModule,
     ImagesModule,
-    AuthModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

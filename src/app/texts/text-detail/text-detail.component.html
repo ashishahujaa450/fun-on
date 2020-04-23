@@ -29,16 +29,16 @@
               type="button"
               class="btn btn-sm"
               [ngClass]="{
-                'btn-primary': isLiked,
-                'btn-outline-primary': !isLiked
+                'btn-primary': alreadyLiked || isLiked,
+                'btn-outline-primary': !alreadyLiked && !isLiked
               }"
               (click)="switchLike()"
             >
               Like
               <span
                 class="badge"
-                [ngClass]="{ 'badge-light': isLiked, 'badge-edit': !isLiked }"
-                >{{ selectedPost.like }}</span
+                [ngClass]="{ 'badge-light': alreadyLiked || isLiked }"
+                >{{ selectedPost.likeUsersList.length }}</span
               >
             </button>
             <div>
